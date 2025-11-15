@@ -1,25 +1,32 @@
 /* main.js
-   - Filtragem de categorias do cardápio
-   - Ativa botão de filtro
-   - Preenche ano no rodapé
-   - Simula envio do form de contato (você pode integrar com backend / email / webhook)
+   - Filtragem do cardápio
+   - Ativar botão de filtro
+   - Preencher ano no rodapé
+   - Simular envio do formulário de contato
+   - Carregar navbar/footer dinamicamente
+   - Marcar item ativo da navbar (compatível com Netlify)
 */
 
 document.addEventListener('DOMContentLoaded', function () {
-  // preencher ano nos pés de página
+
+  /* ========================
+        ANO AUTOMÁTICO
+  ==========================*/
   const year = new Date().getFullYear();
   const spans = ['year','year2','year3'];
   spans.forEach(id => {
     const el = document.getElementById(id);
-    if(el) el.textContent = year;
+    if (el) el.textContent = year;
   });
 
-  // FILTRO DO CARDÁPIO
+
+  /* ========================
+         FILTRO DO CARDÁPIO
+  ==========================*/
   const filterButtons = document.querySelectorAll('.filter-btn');
   if (filterButtons.length) {
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        // ativa visual
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
@@ -33,75 +40,126 @@ document.addEventListener('DOMContentLoaded', function () {
     const categories = document.querySelectorAll('.menu-category');
     categories.forEach(cat => {
       const catName = cat.getAttribute('data-category') || 'all';
-      if (filter === 'all' || filter === catName) {
-        cat.style.display = ''; // mostra
-      } else {
-        cat.style.display = 'none';
-      }
+      cat.style.display = (filter === 'all' || filter === catName) ? '' : 'none';
     });
   }
 
-  // Inicial: mostrar tudo
+  // Mostrar tudo inicialmente
   filterMenu('all');
 
-  // FORMULÁRIO DE CONTATO (simples)
+
+  /* ========================
+        FORM DE CONTATO
+  ==========================*/
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     const alertBox = document.getElementById('contactAlert');
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Simulação de envio - aqui você pode integrar com fetch() para sua API
+
       if (alertBox) {
         alertBox.style.display = 'block';
         alertBox.className = 'alert alert-success';
-        alertBox.textContent = 'Mensagem enviada! Em breve retornamos pelo seu contato.';
-        setTimeout(() => { alertBox.style.display = 'none'; contactForm.reset(); }, 3000);
+        alertBox.textContent = 'Mensagem enviada! Em breve retornamos.';
+        setTimeout(() => {
+          alertBox.style.display = 'none';
+          contactForm.reset();
+        }, 3000);
       }
     });
   }
-});
-// main.js ou um script no final do body
-document.addEventListener('DOMContentLoaded', () => {
-  const currentPage = window.location.pathname.split('/').pop(); // pega o nome do arquivo atual
-  const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
 
-  navLinks.forEach(link => {
-    const linkPage = link.getAttribute('href');
-    if(linkPage === currentPage) {
-      link.classList.add('active');
-    } else {
-      link.classList.remove('active');
+});
+
+
+function makeAbsolutePaths(containerSelector) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  // imagens
+  container.querySelectorAll('img').forEach(img => {
+    const src = img.getAttribute('src') || '';
+    if (src && !src.startsWith('/') && !src.startsWith('http')) {
+      img.src = '/' + src.replace(/^(\.\/|\/?)/, '');
     }
   });
-});
+
+  // links CSS/JS etc (caso você use link/script dentro do fragmento)
+  container.querySelectorAll('link, a, script').forEach(el => {
+    const attr = el.tagName.toLowerCase() === 'a' ? 'href' : 'src';
+    const val = el.getAttribute(attr);
+    if (val && !val.startsWith('/') && !val.startsWith('http') && !val.startsWith('#')) {
+      el.setAttribute(attr, '/' + val.replace(/^(\.\/|\/?)/, ''));
+    }
+  });
+}
+
 function loadHTML(selector, url) {
   fetch(url)
-    .then(response => response.text())
-    .then(data => {
-      document.querySelector(selector).innerHTML = data;
-      // atualiza ano no footer
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+      return res.text();
+    })
+    .then(html => {
+      document.querySelector(selector).innerHTML = html;
+      // normaliza paths dentro do fragmento inserido
+      makeAbsolutePaths(selector);
+
+      // atualiza ano no footer (caso haja)
       const yearEl = document.querySelector('#year');
-      if(yearEl) yearEl.textContent = new Date().getFullYear();
-      // ativa link da navbar
-      setActiveNavLink();
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // marca link ativo se for a navbar
+      if (selector === '#navbar-placeholder') {
+        setActiveNavLink();
+      }
     })
     .catch(err => console.error(`Erro ao carregar ${url}:`, err));
 }
 
-// ativa o item ativo do menu
+
+/* ================================
+         NAVBAR ATIVA
+   Compatível com Netlify:
+   - /cardapio
+   - /cardapio.html
+=================================*/
 function setActiveNavLink() {
-  const currentPage = window.location.pathname.split('/').pop();
+  let path = window.location.pathname;
+
+  // Remove "/" final (ex: "/cardapio/")
+  path = path.replace(/\/$/, "");
+
+  // pega só o final da rota
+  let current = path.split('/').pop();  // cardapio, contato, index
+
+  // Se estiver vazio → index
+  if (current === "") current = "index";
+
+  // Remove .html caso exista
+  current = current.replace(".html", "");
+
   const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
   navLinks.forEach(link => {
     link.classList.remove('active');
-    const linkPage = link.getAttribute('href').replace('.html', '');
-if (currentPage.includes(linkPage)) {
-    link.classList.add('active');
-}
+
+    let linkHref = link.getAttribute('href')
+      .replace(".html", "")
+      .replace("/", "");
+
+    if (linkHref === "") linkHref = "index";
+
+    if (linkHref === current) {
+      link.classList.add('active');
+    }
   });
 }
 
-// carregar navbar e footer
+
+/* ================================
+      INICIAR CARREGAMENTO
+=================================*/
 document.addEventListener('DOMContentLoaded', () => {
   loadHTML('#navbar-placeholder', 'navbar.html');
   loadHTML('#footer-placeholder', 'footer.html');

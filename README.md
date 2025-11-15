@@ -1,6 +1,6 @@
 ## 📝 Sobre o projeto
 
-Este projeto foi desenvolvido como um site de apresentação para uma pequena empresa de doces artesanais. Ele contém:
+Este projeto foi desenvolvido como um site de apresentação para uma pequena empresa de doces saudáveis. Ele contém:
 
 - Navbar moderna com indicação do item ativo.
 - Hero section com imagem principal e botão para iFood.
