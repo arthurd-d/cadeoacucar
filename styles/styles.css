@@ -120,6 +120,11 @@ body {
   overflow: hidden;   
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
+@media (max-width: 768px) {
+  .hero-image {
+    display: none;
+  }
+}
 
 .hero-image img {
   width: 100%;
