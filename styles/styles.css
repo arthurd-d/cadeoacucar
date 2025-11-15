@@ -136,6 +136,25 @@ body {
 .story-text{
   font-size: large;
 }
+
+/* Texto sobre a imagem — desktop */
+.hero-text {
+  max-width: 80%;     /* evita texto gigante */
+}
+
+/* Texto no celular */
+@media (max-width: 768px) {
+  .hero-text h2 {
+    font-size: 1.4rem;
+  }
+  .hero-text p {
+    font-size: 0.9rem;
+  }
+  .hero-text {
+    max-width: 90%; /* deixa mais flexível */
+  }
+}
+
 /* =========================================
    CARDÁPIO
    ========================================= */
