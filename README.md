@@ -6,9 +6,7 @@ Este projeto foi desenvolvido como um site de apresentação para uma pequena em
 - Hero section com imagem principal e botão para iFood.
 - Seções de história e destaques de produtos.
 - Cardápio filtrável por categorias.
-- Stickers animados para melhorar a identidade visual.
 - Footer dinâmico com ano automático.
-- Links externos com `target="_blank"` seguro (`rel="noopener noreferrer"`).
 
 ## 💻 Tecnologias utilizadas
 
