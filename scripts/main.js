@@ -74,3 +74,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+function loadHTML(selector, url) {
+  fetch(url)
+    .then(response => response.text())
+    .then(data => {
+      document.querySelector(selector).innerHTML = data;
+      // atualiza ano no footer
+      const yearEl = document.querySelector('#year');
+      if(yearEl) yearEl.textContent = new Date().getFullYear();
+      // ativa link da navbar
+      setActiveNavLink();
+    })
+    .catch(err => console.error(`Erro ao carregar ${url}:`, err));
+}
+
+// ativa o item ativo do menu
+function setActiveNavLink() {
+  const currentPage = window.location.pathname.split('/').pop();
+  const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    const linkPage = link.getAttribute('href').replace('.html', '');
+if (currentPage.includes(linkPage)) {
+    link.classList.add('active');
+}
+  });
+}
+
+// carregar navbar e footer
+document.addEventListener('DOMContentLoaded', () => {
+  loadHTML('#navbar-placeholder', 'navbar.html');
+  loadHTML('#footer-placeholder', 'footer.html');
+});
