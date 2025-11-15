@@ -99,10 +99,9 @@ body {
 }
 
 .btn-ifood {
-    background-color: var(--rosa);
+    background-color: var(--vermelho);
     color: white;
     font-weight: bold;
-    border-radius: 50px;
     padding: 12px 25px;
     transition: 0.3s ease;
 }
@@ -114,8 +113,9 @@ body {
 }
 
 .hero-image {
-  width: 500px;       /* largura igual à altura */
-  height: 500px;      /* altura igual à largura */
+  max-width: 100%;       /* largura igual à altura */
+  height: auto;      /* altura igual à largura */
+  aspect-ratio: 1/1;
   border-radius: 50%; /* deixa circular */
   overflow: hidden;   
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -227,20 +227,20 @@ form button:hover {
 }
 
 /* cores customizadas para os filtros */
-.filter-btn, .sendBtn {
+.filter-btn{
   color: var(--vermelho);
   border-color: var(--vermelho);
   background-color: transparent;
   transition: all 0.3s;
 }
 
-.filter-btn:hover, .sendBtn {
+.filter-btn:hover{
   color: #fff;
   background-color: var(--verde);
   border-color: var(--verde);
 }
 
-.filter-btn.active, .sendBtn {
+.filter-btn.active{
   color: #fff;
   background-color: var(--verde);
   border-color: var(--verde);
