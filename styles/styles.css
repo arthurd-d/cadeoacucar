@@ -1,0 +1,247 @@
+/* =========================================
+   VARIÁVEIS DE COR (IDENTIDADE VISUAL)
+   ========================================= */
+:root {
+    --vermelho: #f46751;
+    --rosa: #f38cea;
+    --azul: #4193c0;
+    --bg: #f3ebe3;
+    --verde: #35bb88;
+
+    --fonte-principal: 'Montserrat', sans-serif;
+}
+
+/* =========================================
+   ESTILO GLOBAL DA PÁGINA
+   ========================================= */
+h1, h2{
+  font-weight: 600;
+}
+body {
+    background-color: var(--bg);
+    font-family: var(--fonte-principal);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR MODERNA */
+.navbar {
+  background: var(--bg); /* ou sua cor de fundo */
+  padding: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.navbar-nav .nav-item {
+  position: relative;
+  margin-left: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+  padding-bottom: 0.25rem;
+}
+
+/* Linha moderna para item ativo */
+.navbar-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #FF6B6B; /* cor da linha */
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* Para efeito mais “descolado”, hover sutil na cor do texto */
+.navbar-nav .nav-link:hover {
+  color: #FF6B6B;
+}
+
+.navbar {
+  backdrop-filter: blur(8px); /* leve desfoque de fundo */
+  background: #efe8e1
+
+}
+
+.navbar-nav .nav-link.active::after {
+  height: 4px;
+  background: linear-gradient(90deg, #FF6B6B, #FFD93D);
+}
+
+
+/* =========================================
+   HOME
+   ========================================= */
+.hero-section {
+    padding: 4rem 1.5rem;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    color: var(--vermelho);
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+}
+
+.btn-ifood {
+    background-color: var(--rosa);
+    color: white;
+    font-weight: bold;
+    border-radius: 50px;
+    padding: 12px 25px;
+    transition: 0.3s ease;
+}
+
+.btn-ifood:hover {
+    background-color: var(--azul);
+    color: white;
+    transform: scale(1.05);
+}
+
+.hero-image {
+  width: 500px;       /* largura igual à altura */
+  height: 500px;      /* altura igual à largura */
+  border-radius: 50%; /* deixa circular */
+  overflow: hidden;   
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.story-text{
+  font-size: large;
+}
+/* =========================================
+   CARDÁPIO
+   ========================================= */
+.category-title {
+    font-size: 2rem;
+    color: var(--azul);
+    margin: 2rem 0 1rem;
+    text-align: center;
+}
+
+.cardapio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.produto-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 7px 20px rgba(0,0,0,0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.produto-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+}
+
+.produto-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.produto-card h3 {
+    font-size: 1.5rem;
+    color: var(--vermelho);
+}
+
+.produto-card p {
+    font-size: 0.95rem;
+}
+
+.produto-preco {
+    font-weight: bold;
+    color: var(--verde);
+    margin-top: 10px;
+}
+
+/* =========================================
+   CONTATO
+   ========================================= */
+.contact-box {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 2rem;
+    box-shadow: 0px 7px 20px rgba(0,0,0,0.1);
+}
+
+.contact-title {
+    font-size: 2.2rem;
+    color: var(--rosa);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info {
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Inputs */
+form input, form textarea {
+    border-radius: 10px !important;
+    border: 2px solid var(--azul) !important;
+}
+
+form button {
+    background: var(--rosa);
+    color: white;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 10px 20px;
+    transition: 0.3s ease;
+}
+
+form button:hover {
+    background: var(--vermelho);
+}
+
+/* cores customizadas para os filtros */
+.filter-btn, .sendBtn {
+  color: var(--vermelho);
+  border-color: var(--vermelho);
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.filter-btn:hover, .sendBtn {
+  color: #fff;
+  background-color: var(--verde);
+  border-color: var(--verde);
+}
+
+.filter-btn.active, .sendBtn {
+  color: #fff;
+  background-color: var(--verde);
+  border-color: var(--verde);
+}
